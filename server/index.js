@@ -8,13 +8,29 @@ const app = express()
 app.use(express.json())
 const tours = JSON.parse(fs.readFileSync(`${reqPath}`))
 
-// GET REQUEST
+// GET REQUEST FOR ALL TOURS
 app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({
     status: 'success',
     results: tours.length,
     data: {
       tours,
+    },
+  })
+})
+
+// GET REQUEST FOR ONE TOUR
+app.get('/api/v1/tours/:id', (req, res) => {
+  const id = req.params.id * 1
+
+  if (id > tours.length) {
+    return res.status(404).json({ status: 'error', message: 'Invalid ID' })
+  }
+  const tour = tours.find((el) => el.id === id)
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour,
     },
   })
 })
@@ -33,6 +49,19 @@ app.post('/api/v1/tours', (req, res) => {
         tour: newTour,
       },
     })
+  })
+})
+
+// PATCH REQUEST
+app.patch('/api/v1/tours/:id', (req, res) => {
+  if (req.params.id * 1 > tours.length) {
+    return res.status(404).json({ status: 'error', message: 'Invalid ID' })
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour: 'tour updated...',
+    },
   })
 })
 
