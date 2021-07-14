@@ -1,5 +1,4 @@
-const dotenv = require('dotenv')
-dotenv.config({path: './config.env'})
+const dotenv = require('dotenv').config()
 const app = require('./app')
 
 // START SERVER
