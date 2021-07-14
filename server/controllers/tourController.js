@@ -12,6 +12,13 @@ exports.checkID = (req,res,next,val) => {
   next()
 }
 
+exports.checkBody = (req,res,next) => {
+  if (!req.body.name || !req.body.price) {
+    return res.status(400).json({ status: 'error', message: 'Please enter name and price'})
+  }
+  next()
+}
+
 // GET ALL TOURS
 exports.getAllTours = (req, res) => {
     console.log(req.requestTime)
