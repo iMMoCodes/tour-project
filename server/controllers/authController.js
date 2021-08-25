@@ -19,6 +19,8 @@ exports.signUp = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangedAt: req.body.passwordChangedAt,
+    passwordResetToken: req.body.passwordResetToken,
+    paasswordResetExpires: req.body.paasswordResetExpires,
   })
 
   const token = signToken(newUser._id)
@@ -98,3 +100,17 @@ exports.restrictTo = (...roles) => {
     next()
   }
 }
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  // Get user based on email
+  const user = await User.findOne({ email: req.body.email })
+  if (!user) {
+    return next(new AppError('There is no user with that email address', 404))
+  }
+  // Generate reset token
+  const resetToken = user.createPasswordResetToken()
+  await user.save({ validateBeforeSave: false })
+  // Send back as email
+})
+
+exports.resetPassword = (req, res, next) => {}
