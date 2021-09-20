@@ -19,6 +19,9 @@ app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
 
 // GLOBAL MIDDLEWARES
+// Serve static files
+app.use(express.static(`${__dirname}/public/css`))
+app.use(express.static(`${__dirname}/public/img`))
 // Set security HTTP headers
 app.use(helmet())
 
@@ -67,7 +70,10 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.get('/', (req, res) => {
-  res.status(200).render('base')
+  res.status(200).render('base', {
+    tour: 'The Forest Hiker',
+    user: 'Immo',
+  })
 })
 
 app.use('/api/v1/tours', tourRouter)
