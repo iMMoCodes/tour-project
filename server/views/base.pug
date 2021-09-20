@@ -6,36 +6,16 @@ html
         link(rel='stylesheet' href='style.css')
         link(rel='shorcut icon' type='image/png' href='favicon.png')
         link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
-        title Tours | Exiting tours for adventurous people
+        title Tours | #{title}
 
     body
 
         // HEADER
-        header.header
-            nav.nav.nav--tours
-                a.nav__el(href='#') All Tours
-            .header__logo
-                img(src='logo-white.png' alt='Tours logo')
-            nav.nav.nav--user
-                //- a.nav__el(href='#') My Bookings
-                //- a.nav__el(href='#')
-                //-     img.nav__user-img(src='img/user.jpg' alt='User photo')
-                //-     span Immo
-                button.nav__el Login
-                button.nav__el.nav__el--cta Sign up
+        include _header
 
         // CONTENT
-        section.overview
-            h1= tour
+        block content
+            h1 This is a placeholder heading
 
         // FOOTER
-        footer.footer
-            .footer__logo
-                img(src='logo-green.png' alt='Tours logo')
-            ul.footer__nav
-                li: a(href='#') About us
-                li: a(href='#') Download apps
-                li: a(href='#') Become a guide
-                li: a(href='#') Careers
-                li: a(href='#') Contact
-            p.footer__copyright &copy; by Immo
+        include _footer
