@@ -8,10 +8,16 @@ exports.getOverview = catchAsync(async (req, res, next) => {
   const tours = await Tour.find()
   // 2) Build template
   // 3) Render template using tour data
-  res.status(200).render('overview', {
-    title: 'All Tours',
-    tours,
-  })
+  res
+    .status(200)
+    .set(
+      'Content-Security-Policy',
+      "default-src 'self' https://js.stripe.com/v3/ ws://localhost:60112/ ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://js.stripe.com/v3/ 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
+    )
+    .render('overview', {
+      title: 'All Tours',
+      tours,
+    })
 })
 
 exports.getTour = catchAsync(async (req, res, next) => {
@@ -43,7 +49,7 @@ exports.getLoginForm = (req, res) => {
     .status(200)
     .set(
       'Content-Security-Policy',
-      "default-src 'self' https://cdnjs.cloudflare.com/ ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://api.mapbox.com 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
+      "default-src 'self' https://cdnjs.cloudflare.com/ https://js.stripe.com/v3/ ws://localhost:60112/ ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://js.stripe.com/v3/ 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
     )
     .render('login', {
       title: 'Log into your account',
@@ -51,9 +57,15 @@ exports.getLoginForm = (req, res) => {
 }
 
 exports.getAccount = (req, res) => {
-  res.status(200).render('account', {
-    title: 'Your account',
-  })
+  res
+    .status(200)
+    .set(
+      'Content-Security-Policy',
+      "default-src 'self' https://js.stripe.com/v3/ ws://localhost:60112/ ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://js.stripe.com/v3/ 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
+    )
+    .render('account', {
+      title: 'Your account',
+    })
 }
 
 exports.updateUserData = catchAsync(async (req, res, next) => {
