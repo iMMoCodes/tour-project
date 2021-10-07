@@ -76,10 +76,16 @@ exports.getMyTours = catchAsync(async (req, res, next) => {
   const tourIDs = bookings.map((el) => el.tour)
   const tours = await Tour.find({ _id: { $in: tourIDs } })
 
-  res.status(200).render('overview', {
-    title: 'My Tours',
-    tours,
-  })
+  res
+    .status(200)
+    .set(
+      'Content-Security-Policy',
+      "default-src 'self' https://js.stripe.com/v3/ ws://localhost:*/ ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://js.stripe.com/v3/ 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
+    )
+    .render('overview', {
+      title: 'My Tours',
+      tours,
+    })
 })
 
 exports.updateUserData = catchAsync(async (req, res, next) => {
@@ -94,8 +100,26 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
       runValidators: true,
     }
   )
-  res.status(200).render('account', {
-    title: 'Your account',
-    user: updatedUser,
-  })
+  res
+    .status(200)
+    .set(
+      'Content-Security-Policy',
+      "default-src 'self' https://js.stripe.com/v3/ ws://localhost:*/ ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://js.stripe.com/v3/ 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
+    )
+    .render('account', {
+      title: 'Your account',
+      user: updatedUser,
+    })
 })
+
+exports.getSignUpForm = (req, res) => {
+  res
+    .status(200)
+    .set(
+      'Content-Security-Policy',
+      "default-src 'self' https://js.stripe.com/v3/ ws://localhost:*/ ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://js.stripe.com/v3/ 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
+    )
+    .render('signUp', {
+      title: 'Sign Up',
+    })
+}
